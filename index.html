@@ -725,7 +725,7 @@
             let headersToUse = rawHeaders.length > 0 ? rawHeaders : ['วันที่ลงข้อมูล', 'ชื่อ-นามสกุล', 'น้ำหนัก', 'ส่วนสูง', 'BMI', 'ค่า AHI', 'การใช้เครื่อง', 'สิทธิการรักษา', 'สถานะ'];
 
             headersToUse.forEach((header, index) => {
-                if (header === '_rowIndex') return;
+                if (header === '_rowIndex' || header === 'ชื่อ-นามสกุล(ภาษาไทย)_36') return;
                 
                 let val = rowData[header] || '';
                 
@@ -749,6 +749,12 @@
                 // ระบบกรองและจัดหมวดหมู่ Input อัตโนมัติจากชื่อ Header
                 if (lowerL.includes('ชนิดการตรวจ') || lowerL.includes('test type')) {
                     optionsList = ['Full night', 'Split night', 'PAP Titration'];
+                }
+                else if (lowerL.includes('ess') && !lowerL.includes('ตัวเลข')) {
+                    optionsList = ['< 10 คะแนน', '10 - 15 คะแนน', '> 15 คะแนน'];
+                }
+                else if (lowerL.includes('stop') && !lowerL.includes('ตัวเลข')) {
+                    optionsList = ['< 3 คะแนน', '3 - 5 คะแนน', '> 5 คะแนน'];
                 }
                 else if (lowerL.includes('ปัญหาการนอน')) {
                     const sleepProblems = ['เข้านอนหลับยาก', 'หลับไม่สนิท', 'สะดุ้งตื่นประจำ', 'ปัสสาวะบ่อยกลางคืนมากกว่า 3 ครั้ง/สัปดาห์ขึ้นไป', 'ปวดศีรษะหลังตื่นนอน', 'สะดุ้งตื่นแล้วหลับต่อยาก', 'อื่นๆ ระบุเติมในช่องว่าง'];
